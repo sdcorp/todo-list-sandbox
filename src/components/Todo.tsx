@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import { TodoContext } from '../context/TodoContext';
+import { TodosActionTypes } from '../reducer';
 
 export const Todo: React.FC<{ id: number; completed: boolean }> = ({ children, id, completed }) => {
   const { dispatch } = useContext(TodoContext);
-  const removeTodo = (todoId: number) => dispatch({ type: 'REMOVE_TODO', payload: todoId });
-  const toggleTodo = (todoId: number) => dispatch({ type: 'TOGGLE_TODO', payload: todoId });
+  // TODO need wrap into useCallback to avoid re-render
+  const removeTodo = (todoId: number) => dispatch({ type: TodosActionTypes.REMOVE_TODO, payload: todoId });
+  const toggleTodo = (todoId: number) => dispatch({ type: TodosActionTypes.TOGGLE_TODO, payload: todoId });
   return (
     <li>
       <span style={{ cursor: 'pointer' }} role="img" aria-label="done" onClick={() => toggleTodo(id)}>

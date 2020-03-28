@@ -1,4 +1,5 @@
-import { Dispatch } from "react";
+import { Dispatch } from 'react';
+import { TodosActionTypes } from './reducer';
 
 export interface ITodo {
   userId: number;
@@ -13,9 +14,6 @@ export interface ITodosStats {
 }
 
 export interface ITodoContext {
-  todos: ITodo[];
-  dispatch: Dispatch<{type: string, payload: any}>
-  addTodo?: (title: string) => void;
-  removeTodo?: (todoId: number) => void;
-  toggleTodo?: (todoId: number) => void;
+  todos: Array<ITodo>;
+  dispatch: Dispatch<{ type: TodosActionTypes; payload: any }>;
 }

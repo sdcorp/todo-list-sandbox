@@ -1,11 +1,20 @@
 import { ITodo } from './interfaces';
 import { Reducer } from 'react';
 
-export const todoReducer: Reducer<ITodo[], { type: string; payload: any }> = (state, { type, payload }) => {
+// TODO make action type Enums
+export enum TodosActionTypes {
+  SET_TODOS,
+  ADD_TODO,
+  REMOVE_TODO,
+  TOGGLE_TODO,
+}
+
+export const todoReducer: Reducer<ITodo[], { type: TodosActionTypes; payload: any }> = (state, { type, payload }) => {
   switch (type) {
-    case 'SET_TODOS':
+    case TodosActionTypes.SET_TODOS:
       return payload;
-    case 'ADD_TODO':
+
+    case TodosActionTypes.ADD_TODO:
       return [
         ...state,
         {
@@ -19,16 +28,18 @@ export const todoReducer: Reducer<ITodo[], { type: string; payload: any }> = (st
           completed: false,
         },
       ];
-    case 'REMOVE_TODO':
+
+    case TodosActionTypes.REMOVE_TODO:
       return state.filter((todo) => todo.id !== payload);
-    case 'TOGGLE_TODO':
-      const toogleTodoCb = (todo: ITodo) => {
+
+    case TodosActionTypes.TOGGLE_TODO:
+      return state.map((todo) => {
         if (todo.id === payload) {
           todo.completed = !todo.completed;
         }
         return todo;
-      };
-      return state.map(toogleTodoCb);
+      });
+
     default:
       return state;
   }

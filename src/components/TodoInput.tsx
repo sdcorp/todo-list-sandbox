@@ -1,13 +1,19 @@
-import React, { useState, FormEvent, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { TodoContext } from '../context/TodoContext';
+import { TodosActionTypes } from '../reducer';
 
 export const TodoInput: React.FC = () => {
   const [title, setTitle] = useState('');
   const { dispatch } = useContext(TodoContext);
 
-  const addTodo = (title: string) => dispatch({ type: 'ADD_TODO', payload: title });
+  // TODO ref type def
+  const divRef = useRef<HTMLDivElement>(null);
 
-  const submitTodo = (e: FormEvent<HTMLFormElement>) => {
+  const addTodo = (title: string) => dispatch({ type: TodosActionTypes.ADD_TODO, payload: title });
+
+  // TODO handleSubmit, handleInputChange
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     addTodo(title);
     setTitle('');
@@ -15,8 +21,10 @@ export const TodoInput: React.FC = () => {
 
   return (
     <section>
-      <form onSubmit={submitTodo}>
+      <div ref={divRef}>div</div>
+      <form onSubmit={handleSubmit}>
         <label>
+          Title
           <input type="text" onChange={(e) => setTitle(e.target.value)} value={title} />
         </label>
         <input type="submit" value="Add Todo" />

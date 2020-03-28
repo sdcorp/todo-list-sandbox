@@ -8,7 +8,7 @@ export const TodoList: React.FC = () => {
     <section>
       <ul>
         {!todos
-          ? null
+          ? 'No todos'
           : todos.map((todo) => (
               <Todo key={todo.id} id={todo.id} completed={todo.completed}>
                 {todo.title}
